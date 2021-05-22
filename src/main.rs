@@ -7,6 +7,15 @@ use colored::*;
 
 fn main() {
   let some_task_name = args().nth(1);
+
+  #[cfg(not(debug_assertions))]
+  let tasks_folder = std::env::current_exe()
+    .expect("could not find the current exe path")
+    .parent()
+    .expect("could not get the binary parent directory")
+    .join(Path::new("tasks"));
+
+  #[cfg(debug_assertions)]
   let tasks_folder = Path::new("tasks");
 
   if some_task_name.is_none() {
