@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::{path::Path};
 use std::process::{Command, Stdio};
 use std::io::{self, Write};
 use std::env::args;
@@ -7,16 +7,17 @@ use colored::*;
 
 fn main() {
   let some_task_name = args().nth(1);
+  let tasks_folder_name = std::env!("tasks_folder_name");
 
   #[cfg(not(debug_assertions))]
   let tasks_folder = std::env::current_exe()
     .expect("could not find the current exe path")
     .parent()
     .expect("could not get the binary parent directory")
-    .join(Path::new("tasks"));
+    .join(Path::new(tasks_folder_name));
 
   #[cfg(debug_assertions)]
-  let tasks_folder = Path::new("tasks");
+  let tasks_folder = Path::new(tasks_folder_name);
 
   if some_task_name.is_none() {
     list_tasks(&tasks_folder);
@@ -26,8 +27,9 @@ fn main() {
 
   let task_name = some_task_name.unwrap();
   let task_args = args().skip(1);
+  let lang = std::env!("lang");
 
-  let output = Command::new("node")
+  let output = Command::new(lang)
     .stdout(Stdio::piped())
     .arg(tasks_folder.join(&task_name))
     .args(task_args)
