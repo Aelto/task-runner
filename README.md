@@ -1,6 +1,6 @@
 # task-runner
 
-a simple task runner in Rust for Node.js.
+a minimalist task runner in Rust for Node/Python/...
 
 # Usage
 ## Folders hierarchy
@@ -19,14 +19,20 @@ workspace tasks. You can place in them tasks that are unique to your projects.
 ---
 
 If you wish to change the name of the task folder, before building from the sources head into the [`build.rs`](build.rs) file and edit the `tasks_folder_name` variable accordingly. For example if you want your tasks folder to be named `mes-taches` (French for "my tasks") then change the variable to the following:
-```rs
+```rust
 tasks_folder_name = "mes-taches";
 ```
 
 ## The tasks
 the task-runner runs javascript files with node.js by default. If you wish to change that, before building the tool from the sources head into the [`build.rs`](build.rs) file and edit the `lang` variable accordingly. For example if you want your task-runner to use python then change the variable like so:
-```rs
+```rust
 let lang = "python";
+```
+
+there is also an `extension` variable. This extension defines what extensions the task runner looks for, it will ignore
+anything that has not this extension. Following the previous example of python, here is what the new value would be:
+```rust
+let extension = ".py";
 ```
 
 ## Running it
