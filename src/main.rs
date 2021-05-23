@@ -48,7 +48,7 @@ fn list_tasks(task_folder: &Path) {
     .expect("could not read the tasks directory");
 
   println!("❕ {}\n   {}", "no task was provided".magenta(), "here is a list of all available tasks:");
-  
+
   let valid_tasks = tasks
     .filter(Result::is_ok)
     .map(Result::unwrap);
@@ -57,7 +57,11 @@ fn list_tasks(task_folder: &Path) {
     if let Some(s) = task.file_name().to_str() {
       let dot_index = s.find('.').unwrap_or(s.len());
 
-      println!("   - {}", &s[..dot_index]);
+      // we do not show files or folder that start with a dot.
+      // this allows users to create file for util functions and such.
+      if dot_index > 0 {
+        println!("   - {}", &s[..dot_index]);
+      }
     }
   }
 }
