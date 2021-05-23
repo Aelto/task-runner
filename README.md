@@ -2,6 +2,9 @@
 
 a minimalist task runner in Rust for Node/Python/...
 
+![screen 1](docs/screen_1.png)
+![screen 2](docs/screen_2.png)
+
 # Usage
 ## Folders hierarchy
 the task-runner looks for two specific folders whenever it's run:
