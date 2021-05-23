@@ -48,13 +48,16 @@ fn list_tasks(task_folder: &Path) {
     .expect("could not read the tasks directory");
 
   println!("❕ {}\n   {}", "no task was provided".magenta(), "here is a list of all available tasks:");
-  for task in tasks {
-    if let Ok(task) = task {
-      if let Some(s) = task.file_name().to_str() {
-        let dot_index = s.find('.').unwrap_or(s.len());
+  
+  let valid_tasks = tasks
+    .filter(Result::is_ok)
+    .map(Result::unwrap);
 
-        println!("   - {}", &s[..dot_index]);
-      }
+  for task in valid_tasks {
+    if let Some(s) = task.file_name().to_str() {
+      let dot_index = s.find('.').unwrap_or(s.len());
+
+      println!("   - {}", &s[..dot_index]);
     }
   }
 }
