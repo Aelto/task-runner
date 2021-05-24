@@ -1,4 +1,4 @@
-use std::{fs::ReadDir, path::Path};
+use std::{fs::ReadDir, path::Path, path::PathBuf};
 use std::process::{Command, Stdio};
 use std::io::{self, Write};
 use std::env::args;
@@ -23,19 +23,11 @@ fn main() {
     return;
   }
 
-  let extension = std::env!("extension");
-  let task_name = format!("{}{}", some_task_name.unwrap(), extension);
+  let task_name = &some_task_name.unwrap();
+  let task_path = get_task_path(&local_tasks_folder, &global_tasks_folder, &task_name);
   let task_args = args().skip(1);
   let lang = std::env!("lang");
   
-  
-  let local_task = local_tasks_folder.join(&task_name);
-  let task_path = if local_task.exists() {
-    local_task
-  } else {
-    global_tasks_folder.join(&task_name)
-  };
-
   if !task_path.exists() {
     println!("no local nor global task was found with the name {}", &task_name);
 
@@ -84,7 +76,7 @@ fn display_tasks(tasks: ReadDir, is_colored: bool) {
     .filter(Result::is_ok)
     .map(Result::unwrap);
 
-  let extension = std::env!("extension");
+  let extension = format!(".{}", std::env!("extension"));
 
   for task in valid_tasks {
     if let Some(s) = task.file_name().to_str() {
@@ -103,4 +95,30 @@ fn display_tasks(tasks: ReadDir, is_colored: bool) {
       }
     }
   }
+}
+
+fn get_task_path(local_task_folder: &Path, global_task_folder: &Path, task_name: &str) -> PathBuf {
+  let extension = std::env!("extension");
+
+  let mut local_path = local_task_folder.join(task_name);
+
+  if local_path.exists() {
+    return local_path;
+  }
+
+  local_path.set_extension(extension);
+
+  if local_path.exists() {
+    return local_path;
+  }
+
+  let mut global_path = global_task_folder.join(task_name);
+
+  if global_path.exists() {
+    return global_path;
+  }
+
+  global_path.set_extension(extension);
+
+  global_path
 }

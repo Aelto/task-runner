@@ -12,7 +12,7 @@ fn main() {
   // so it looks for `.js` files.
   //
   // change it to whatever extension you wish to use:
-  let extension = ".js";
+  let extension = "js";
 
   // defines the name of the folder the task runner will look for
   //

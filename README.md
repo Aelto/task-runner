@@ -1,6 +1,8 @@
-# task-runner
+# rr - minimalist task-runner
 
-a minimalist task runner in Rust for Node/Python/...
+a minimalist task runner in Rust for Node/Python/... for you work environment.
+Allows you to write scripts with the language of your choice that you can use
+anywhere on your computer.
 
 ![screen 1](docs/screen_1.png)
 ![screen 2](docs/screen_2.png)
@@ -35,7 +37,7 @@ let lang = "python";
 there is also an `extension` variable. This extension defines what extensions the task runner looks for, it will ignore
 anything that has not this extension. Following the previous example of python, here is what the new value would be:
 ```rust
-let extension = ".py";
+let extension = "py";
 ```
 
 ## Running it
