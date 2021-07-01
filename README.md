@@ -1,3 +1,6 @@
+
+![banner](docs/rr-white.png)
+
 # rr - minimalist task-runner
 
 a minimalist task runner in Rust for Node/Python/... for you work environment.
