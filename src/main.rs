@@ -35,7 +35,7 @@ fn main() {
   }
 
   let output = Command::new(lang)
-    .stdout(Stdio::piped())
+    .stdout(Stdio::inherit())
     .arg(task_path)
     .args(task_args)
     .output()
